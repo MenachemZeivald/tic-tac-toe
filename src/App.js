@@ -1,24 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import ChooseLevel from './components/ChooseLevel';
+import ResOnTop from './components/ResOnTop';
+import Results from './components/Results';
+import Board from './components/Board';
+import Victory from './components/Victory';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
 
 function App() {
+  
+  const [winner, setWinner] = useState('')
+  const [level, setLevel] = useState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <nav>
+        <div>
+          <a href='/'>Home</a>
+        </div>
+        <div>
+          <Link to={'/results'}>
+            <ResOnTop/>
+          </Link>
+        </div>
+      </nav>
+
+      <Routes>
+        <Route index element={ !level ?
+          <><p>language</p><ChooseLevel setLevel={setLevel}/></> :
+          winner ?
+            <Victory res={winner} /> :
+            <Board setWinner={setWinner} level={level} />}/>
+        <Route path='/results' element={<Results/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
