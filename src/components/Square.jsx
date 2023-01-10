@@ -1,19 +1,28 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
+import DefaultStyle from "../DefaultStyle";
+
 
 export default function Square({ place, arr, setTurn }) {
-  let style = {
-    border: '1px solid black',
-    aspectRatio: '1',
-    textAlign: 'center',
-    fontSize: '500%',
-    userSelect: 'none',
-  }
 
   return (
     <>
       {arr[place] === ' ' ?
-      <div style={style} onClick={() => {setTurn(place)}}></div> :
-      <div style={style}>{arr[place]}</div> }
+      <SquareStyle onClick={() => {setTurn(place)}}></SquareStyle> :
+      <SquareStyle>{arr[place]}</SquareStyle> }
     </>
   )
 }
+
+
+const SquareStyle = styled(DefaultStyle)`
+    border: 3px solid var(--pink);
+    aspect-ratio: 1;
+    width: auto;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: min(900%, 20vw);
+    user-select: none;
+`

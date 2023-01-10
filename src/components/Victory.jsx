@@ -1,15 +1,142 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
+import DefaultStyle from "../DefaultStyle";
 
-/**
- * It's a function that takes in a prop called res and returns a div that says you won, you lost, or
- * tie, and a button that reloads the page.
- * @returns A function that returns a component.
- */
-export default function Victory({ res }) {
+export default function Victory({ res, restart, lang }) {
+
+  useEffect(() => {
+    document.body.style.aspectRatio = '1';
+    document.body.style.background = 'repeating-radial-gradient(var(--blue), #78b5e4, var(--blue) 25%)';
+  
+    return () => {
+    document.body.style.aspectRatio = null;
+    document.body.style.background = 'var(--blue)'
+    }
+  }, [])
+
   return (
-    <>
-        <div>{res === 'win' ? 'you won!' : res === 'lose' ? 'you lose!' : 'tie!'}</div>
-        <button onClick={() => {window.location.reload()}}>i want to play again!</button>
-    </>
+    <ResContainer >
+        <ResTxt lang={lang} >{res === 'win' ? ( lang === 'en' ? 'you won!' : 'ניצחת') : res === 'lose' ? (lang === 'en' ? 'you lose!' : 'הפסדת') : (lang === 'en' ? 'tie!' : 'תיקו')}</ResTxt>
+        <ResBtnContainer>
+          <DefaultStyle onClick={() => {restart(false)}} lang={lang} >{ lang === 'en' ? 'play again' : 'לשחק שוב'}</DefaultStyle>
+          <DefaultStyle onClick={()=>{restart(true)}} lang={lang} >{ lang === 'en' ? 'change level' : 'לשנות דרגת קושי'}</DefaultStyle>
+        </ResBtnContainer>
+        <ResIcons>
+          <div>X</div>
+          <div>O</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Thumb_Up' : res === 'lose' ? 'Thumb_Down' : 'Thumb_up' }</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
+          <div>X</div>
+          <div>O</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Thumb_Up' : 'Thumb_Down'}</div>
+          <div className='material-symbols-outlined'>{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
+          <div>X</div>
+          <div>O</div>
+        </ResIcons>
+    </ResContainer>
   )
+}
+
+
+let iconsLocations4BigScrn = [`
+   transform: translate(-500px, -400px) rotate(10deg)`,
+  `transform: translate(100px, -410px) rotate(10deg)`,
+  `transform: translate(-600px, -210px) rotate(-10deg)`,
+  `transform: translate(-550px, -10px) rotate(10deg)`,
+  `transform: translate(-50px, -50px) rotate(-10deg)`,
+  `transform: translate(600px, -250px) rotate(-10deg)`,
+  `transform: translate(400px, 20px) rotate(10deg)`,
+  `transform: translate(390px, -440px) rotate(10deg)`,
+  `transform: translate(500px, -100px) rotate(10deg)`,
+  `transform: translate(-250px, -450px) rotate(10deg)`,
+  `transform: translate(100px, 100px) rotate(10deg)`,
+  `transform: translate(-250px, 50px) rotate(10deg)`]
+
+let iconsLocations4SmallScrn = [`
+   transform: translate(-45vw, -25vh) rotate(10deg)`,
+  `transform: translate(-43vw, 0) rotate(10deg)`,
+  `transform: translate(-15vw, -25vh) rotate(10deg)`,
+  `transform: translate(-49vw, -15vh) rotate(-10deg)`,
+  `transform: translate(25vw, -25vh) rotate(-10deg)`,
+  `transform: translate(35vw, -15vh) rotate(-10deg)`,
+  `transform: translate(-10vw, -10vh) rotate(10deg)`,
+  `transform: translate(25vw, 2vh) rotate(10deg)`,
+  `transform: translate(-10vw, 1vh) rotate(10deg)`,
+  `display: none`,
+  `display: none`,
+  `display: none`]
+
+const ResAnim = keyframes`
+  from { bottom: -70vh; }
+  to { bottom: 0; }
+`
+const ResContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: ${ResAnim} 2s ease alternate;
+  font-size: 50px;
+  height: 90svw;
+  margin: 0 auto;
+  & > * {
+    margin-top: 2%;
+  }
+  @media (width < 425px) {
+    margin-top: 9vh;
+  }
+`
+const ResTxt = styled.div`
+  font-size: 20vw;
+  color: var(--yellow);
+  -webkit-text-stroke: var(--pink) .02em;
+  user-select: none;
+` 
+const ResBtnContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  & > * {
+    flex-wrap: wrap;
+    width: fit-content;
+    height: 100%;
+    padding: 0em .3em;
+    border-width: 4px;
+    user-select: none;
+    font-size: 5vw;
+  }
+  @media (width < 425px) {
+    margin-top: 2vh;
+  }
+`
+const ResIcons = styled.div`
+  color: var(--white);
+  z-index: -1;
+  & .material-symbols-outlined {
+    font-size: 100%;
+  }
+  & > * {
+    position: absolute;
+  }
+  @media (width > 1024px) {
+    ${createIconsLoations(iconsLocations4BigScrn)};
+  }
+  @media (width < 1024px) {
+    ${createIconsLoations(iconsLocations4SmallScrn)};
+  }
+`
+
+function createIconsLoations(arr) {
+  let str = ``;
+  for (let index = 0; index < arr.length; index++) {
+    str += `
+      & div:nth-child(${index + 1}) {
+        ${arr[index]};
+      }
+    `
+  }
+  return str;
 }

@@ -12,21 +12,21 @@ var winList = [
 
 export let checkIfWin = (arr, sign) => {
 
-    if ( winList.some((i) => {
-        return (i.every((j) => { return arr[j] === sign }))
-    })) {
-        return ( sign === 'O' ? 'win' : 'lose');
+    if (checkEachOptionToWin(arr, sign)) {
+        return ( sign === 'X' ? 'win' : 'lose');
     }
 
-    if (arr.every((i) => {return i !== ' '})) {
+    if (countSign(arr, ' ') === 0) {
         return 'tie';
     }
+    return false;
 }
 
 export let AIturn = (arr, level) => {
 
     if (level === 'Easy') {
         return randomNum(arr);
+        // return ((Math.floor(Math.random() * 2) > 1) ? randomNum(arr) : chanceToWin(arr));
 
     } else if (level === 'Medium') {
         return chanceToWin(arr) || randomNum(arr);
@@ -38,7 +38,7 @@ export let AIturn = (arr, level) => {
 }
 
 let chanceToWin = arr => {
-    return checkEachOption(arr, 'X') || checkEachOption(arr, 'O');
+    return checkEachOption(arr, 'O') || checkEachOption(arr, 'X');
 }
 
 function checkEachOption(arr, sign) {
@@ -53,13 +53,13 @@ function checkEachOption(arr, sign) {
 }
 
 function checkIfEmptyPlace(arr, options) {
-    let res = false;
+    let res;
     options.forEach((i) => {
         if (arr[i] === ' ') {
             res = i;
         }
     });
-    return res;
+    return Number.isInteger(res) ? res + 1 : false;
 }
 
 function randomNum(arr) {
@@ -67,7 +67,13 @@ function randomNum(arr) {
     while (arr[randomPlace] !== ' ') {
         randomPlace = Math.floor(Math.random() * 9);
     }
-    return randomPlace;
+    return randomPlace + 1;
+}
+
+function checkEachOptionToWin(arr, sign) {
+    return winList.some((i) => {
+        return (i.every((j) => { return arr[j] === sign; }));
+    });
 }
 
 export let countSign = (arr, sign) => {
