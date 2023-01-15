@@ -5,10 +5,10 @@ import {
 } from "./functions";
 
 export default function AImove(arr) {    
-    return manualMove(arr) || buildGameTree(arr);
+    return manualMoves(arr) || buildGameTree(arr);
 }
 
-function manualMove(arr) {
+function manualMoves(arr) {
 
     if (countSign(arr, 'X') === 1) {
         if (arr[4] === ' ') {
@@ -23,77 +23,64 @@ function manualMove(arr) {
     return false;
 }
 
+/**
+ * It checks all the possible moves and assigns a score to each move. Then it chooses the best move.
+ * @param arr - The current state of the board.
+ * @returns a number between 1 and 9.
+ */
 function buildGameTree(arr) {
 
+    /* Checking all the possible moves and assigning a score to each move. */
     let avialbleOptions = {};
     for (let place = 0; place < 9; place++) {
 
         let tempArr = [...arr];
         if (arr[place] === ' ') {
             tempArr[place] = 'O';
-            avialbleOptions[place] = placeX(tempArr);
+            avialbleOptions[place] = checkBranch(tempArr, 'X');
         }
     }
 
+    /* Choosing the best move. */
     let max = Math.max(...Object.values(avialbleOptions));
     let chooseRandom = Object.keys(avialbleOptions).filter((key) => {
         return avialbleOptions[key] === max;
     })
-    let kkk = (chooseRandom[Math.floor(Math.random() * chooseRandom.length)]  * 1) + 1;
-    return kkk;
+    return (chooseRandom[Math.floor(Math.random() * chooseRandom.length)]  * 1) + 1;
 }
 
-function placeX(arr) {
+function checkBranch(arr, sign) {
     
     let res = checkIfWin(arr, 'O');
     if (res) {
         return (res === 'lose' ? 1 : res === 'win' ? -1 : 0);
     }
 
-    let tempArr;
-    let goodOption = checkEachOption(arr, 'X') || checkEachOption(arr, 'O');
+    /* Checking if there is a winning move for the AI or the player. If there is, it returns the score
+    of that move. */
+    let goodOption, tempArr;
+    if (sign === 'X') {
+	    goodOption = checkEachOption(arr, 'X') || checkEachOption(arr, 'O');
+    } else {
+        goodOption = checkEachOption(arr, 'O') || checkEachOption(arr, 'X');
+    }
     if (goodOption) {
 
         tempArr = [...arr];
-        tempArr[goodOption - 1] = 'X';
-        return placeO(tempArr);
+        tempArr[goodOption - 1] = sign;
+        return checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'));
     }
 
+    /* Checking all the possible moves and assigning a score to each move. */
     let avialbleOptions = {}
     for (let place = 0; place < 9; place++) {
 
         tempArr = [...arr];
         if (arr[place] === ' ') {
-            tempArr[place] = 'X';
-            avialbleOptions[place] = placeO(tempArr);
+            tempArr[place] = sign;
+            avialbleOptions[place] = checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'));
         }
     }
-    return Object.values(avialbleOptions).reduce((a, b) => a + b, 0);
-}
-
-function placeO(arr) {
-        
-    let res = checkIfWin(arr, 'X');
-    if (res) {
-        return (res === 'lose' ? 1 : res === 'win' ? -1 : 0);
-    }
-
-    let tempArr;
-    let goodOption = checkEachOption(arr, 'O') || checkEachOption(arr, 'X');
-    if (goodOption) {
-        tempArr = [...arr];
-        tempArr[goodOption - 1] = 'O';
-        return placeX(tempArr);
-    }
-
-    let avialbleOptions = {}
-    for (let place = 0; place < 9; place++) {
-
-        tempArr = [...arr];
-        if (arr[place] === ' ') {
-            tempArr[place] = 'O';
-            avialbleOptions[place] = placeX(tempArr);
-        }
-    }
+    /* Returning the sum of all the scores in the object. */
     return Object.values(avialbleOptions).reduce((a, b) => a + b, 0);
 }

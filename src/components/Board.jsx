@@ -86,6 +86,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
 
 const BoardStyle = styled.div`
     width: max(620px, 45%);
+    max-width: 75vh;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -93,7 +94,7 @@ const BoardStyle = styled.div`
     margin-top: 20px;
     border: 3px solid var(--pink);
     background-color: var(--yellow);
-    @media (width < 768px) {
+    @media (max-device-width:  768px) {
       width: 97vw;
       margin-top: 10vh;
       margin-bottom: 5vh;
@@ -108,7 +109,7 @@ const ResetBtn = styled(DefaultStyle)`
     transform: translateX(-50%);
     margin-top: 15px;
     border-radius: 8px;
-    @media (width < 768px) {
+    @media (max-device-width:  768px) {
       font-size:xx-large;
     }
 `

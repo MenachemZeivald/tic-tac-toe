@@ -85,7 +85,7 @@ const ResContainer = styled.div`
   height: 70svh;
   width: 100svw;
   /* margin: 0 auto; */
-  @media (width < 425px) {
+  @media (max-device-width:  425px) {
     margin-top: 9vh;
   }
 `
@@ -97,7 +97,7 @@ const ResTxt = styled.div`
   text-align: center;
   /* white-space: nowrap; */
   line-height: 1em;
-  @media (width < 768px) {
+  @media (max-device-width:  768px) {
       font-size: 20vh;
       &:lang(he) {
       font-size: 18vh;
@@ -118,15 +118,15 @@ const ResBtnContainer = styled.div`
     user-select: none;
     font-size: 5vw;
   }
-  @media (width < 425px) {
+  @media (max-device-width:  425px) {
     margin-top: 2vh;
   }
-  @media (width < 768px) {
+  @media (max-device-width:  768px) {
     flex-wrap: wrap;
   }
 `
 const ResetBtns = styled(DefaultStyle)`
-  @media (width < 768px) {
+  @media (max-device-width:  768px) {
       min-width: 80%;
       flex: 2;
       font-size: 5vh;
@@ -144,10 +144,10 @@ const ResIcons = styled.div`
   & > * {
     position: absolute;
   }
-  @media (width > 1024px) {
+  @media (min-device-width:  1024px) {
     ${createIconsLoations(iconsLocations4BigScrn)};
   }
-  @media (width < 1024px) {
+  @media (max-device-width:  1024px) {
     ${createIconsLoations(iconsLocations4SmallScrn)};
   }
 `

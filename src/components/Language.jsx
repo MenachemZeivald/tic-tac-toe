@@ -18,7 +18,7 @@ const LngBtn = styled(DefaultStyle)`
   padding: .2em;
   padding-bottom: .3em;
   position: relative;
-  @media (width < 800px) {
+  @media (max-device-width:  800px) {
     display: none;
   }
   & > span {
@@ -40,7 +40,7 @@ const LngBtn = styled(DefaultStyle)`
 const LngIcon = styled(DefaultStyle)`
   width: 50px;
   aspect-ratio: 1;
-  @media (width > 800px) {
+  @media (min-device-width:  800px) {
       display: none;
     }
 `

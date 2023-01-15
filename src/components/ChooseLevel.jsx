@@ -38,7 +38,7 @@ const LevelsContainer = styled.div`
   margin: auto;
   justify-content: space-around;
   align-items: center;
-  @media (width < 768px) {
+  @media (max-device-width:  768px) {
     flex-direction: column;
     height: 80svh;
     gap: 10px;
@@ -54,7 +54,7 @@ const Level = styled(DefaultStyle)`
   border-width: 5px;
   border-radius: 50%;
   font-size: 350%;
-  @media (width < 768px) {
+  @media (max-device-width:  768px) {
     width: min(30%, 300vw);
     min-width: fit-content;
     font-size: 10vw;

@@ -85,7 +85,7 @@ const Nav = styled.nav`
   & > div:last-child {
     justify-content: end;
   }
-  @media (width < 800px) {
+  @media (max-device-width: 800px) {
     grid-template-columns: 55px auto 55px;
   }
   
