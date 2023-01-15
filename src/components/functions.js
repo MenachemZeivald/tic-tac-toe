@@ -1,3 +1,4 @@
+import AImove from "./HardLevelFunctions";
 
 var winList = [
     [0, 1, 2],
@@ -26,14 +27,12 @@ export let AIturn = (arr, level) => {
 
     if (level === 'Easy') {
         return randomNum(arr);
-        // return ((Math.floor(Math.random() * 2) > 1) ? randomNum(arr) : chanceToWin(arr));
 
     } else if (level === 'Medium') {
         return chanceToWin(arr) || randomNum(arr);
 
     } else if (level === 'Hard') {
-        console.log('stil in progress...');
-
+        return chanceToWin(arr) || AImove(arr) || randomNum(arr);
     }
 }
 
@@ -41,7 +40,7 @@ let chanceToWin = arr => {
     return checkEachOption(arr, 'O') || checkEachOption(arr, 'X');
 }
 
-function checkEachOption(arr, sign) {
+export function checkEachOption(arr, sign) {
     let res = false;
     winList.forEach((row) => {
         let temp = row.filter(index => arr[index] === sign);

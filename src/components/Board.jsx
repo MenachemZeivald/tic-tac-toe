@@ -93,8 +93,8 @@ const BoardStyle = styled.div`
     margin-top: 20px;
     border: 3px solid var(--pink);
     background-color: var(--yellow);
-    @media (width < 650px) {
-      width: 90vw;
+    @media (width < 768px) {
+      width: 97vw;
       margin-top: 10vh;
       margin-bottom: 5vh;
     }
@@ -108,4 +108,7 @@ const ResetBtn = styled(DefaultStyle)`
     transform: translateX(-50%);
     margin-top: 15px;
     border-radius: 8px;
+    @media (width < 768px) {
+      font-size:xx-large;
+    }
 `

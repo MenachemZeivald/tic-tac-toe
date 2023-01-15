@@ -20,24 +20,22 @@ function App() {
     setStatFunc(winner);
   }, [winner]);
 
+  // git remote add origin https://github.com/MenachemZeivald/tic-tac-toe.git
+  // git branch -M main
+  // git push -u origin main
+  
   return (
     <>
     <GlobalStyle/>
       <Nav>
-        <div>
-        <HomeIcon>
-          <div className='material-symbols-outlined' onClick={() => {setWinner(false); setLevel(false)}}>
-            home
-          </div>
+        <HomeIcon translate="no" className='material-symbols-outlined' onClick={() => {setWinner(false); setLevel(false)}}>
+          home
         </HomeIcon>
-        </div>
         <div>
-        <TopRes>
             <ResOnTop stat={stat} lang={language} />
-        </TopRes>
         </div>
         <div>
-        {!level && <Language setLanguage={setLanguage} language={language} ></Language>}
+          {!level && <Language setLanguage={setLanguage} language={language} ></Language>}
         </div>
       </Nav>
 
@@ -73,32 +71,28 @@ function App() {
 export default App;
 
 const Nav = styled.nav`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 175px auto 175px;
+  grid-column-gap: 10px;
   margin: 10px;
+
   & > * {
-    width: 33.3%;
     display: flex;
-  }
-  & > div:first-child {
-    justify-content: start;
   }
   & > div:nth-child(2) {
     justify-content: center;
   }
-  & > div:nth-child(3) {
+  & > div:last-child {
     justify-content: end;
+  }
+  @media (width < 800px) {
+    grid-template-columns: 55px auto 55px;
   }
   
 `
 const HomeIcon = styled(DefaultStyle)`
   width: 50px;
-  .material-symbols-outlined {
-    color: var(--Dblue);
-    font-size: 200%;
-  }
-`
-const TopRes = styled(DefaultStyle)`
-  cursor: default;
+  aspect-ratio: 1;
+  font-size: 200%;
 `
 

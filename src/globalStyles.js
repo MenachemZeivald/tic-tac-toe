@@ -15,6 +15,7 @@ body {
     background: var(--blue);
     font-family: 'Fredoka One', cursive;
     height: 100%;
+    min-width: 350px;
     overflow: hidden;
 }
 

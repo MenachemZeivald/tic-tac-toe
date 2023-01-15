@@ -20,10 +20,10 @@ function LevelOption({ level, setLevel, lang }) {
   return (
     <Level
       onClick={(e) => {
-        ( (e.target.innerText !== 'Hard'&&e.target.innerText !== 'קשה') ? setLevel(lang==='en' ? e.target.innerText :lang_en[lang_he.indexOf(e.target.innerText)] ) : alert('still in progress...'))
+        (setLevel(lang==='en' ? e.target.innerText :lang_en[lang_he.indexOf(e.target.innerText)]))
       }}
     >            
-      {(lang==='en' && level)||lang_he[lang_en.indexOf(level)]}
+      {(lang==='en' && level) || lang_he[lang_en.indexOf(level)]}
     </Level>
   );
 }
@@ -31,6 +31,7 @@ function LevelOption({ level, setLevel, lang }) {
 
 const LevelsContainer = styled.div`
   display: flex;
+  display: -webkit-flex;
   height: 70vh;
   flex-direction: ${({lang}) => lang === 'he' && 'row-reverse'};
   width: 85vw;
@@ -39,15 +40,23 @@ const LevelsContainer = styled.div`
   align-items: center;
   @media (width < 768px) {
     flex-direction: column;
-    height: 90vh;
+    height: 80svh;
+    gap: 10px;
     justify-content: space-evenly;
   }
 ` 
 
 const Level = styled(DefaultStyle)`
-  width: 250px;
+  flex: 1 1 0px;
+  max-width: 250px;
+  min-width: 220px;
   aspect-ratio: 1;
   border-width: 5px;
   border-radius: 50%;
   font-size: 350%;
+  @media (width < 768px) {
+    width: min(30%, 300vw);
+    min-width: fit-content;
+    font-size: 10vw;
+  }
  ` 

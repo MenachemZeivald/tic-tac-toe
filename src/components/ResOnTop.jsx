@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import DefaultStyle from '../DefaultStyle';
 
 export default function ResOnTop({ stat, lang }) {
   return (
@@ -13,13 +13,20 @@ export default function ResOnTop({ stat, lang }) {
 }
 
 
-const Res = styled.div`
+const Res = styled(DefaultStyle)`
   font-size: xx-Large;
-  display: flex;
   justify-content: space-evenly;
   width: ${({lang}) => lang === 'en' ? '400px' : '500px'};
   transition: width .3s;
-  color: var(--Dblue);
+  cursor: default;
+
+  @media (width < 550px) {
+    width: fit-content;
+    font-size: 5vw;
+    & > div {
+      padding: .1em 2vw;
+    } 
+  }
 
   &:lang(he) {
     flex-direction: row-reverse;
@@ -29,7 +36,8 @@ const Res = styled.div`
     display: none;
   }
 
-  @media (width < 550px) {
+
+  /* @media (width < 550px) {
     width: max(30vw, 200px);
     justify-content: space-around;
     & span {
@@ -38,6 +46,6 @@ const Res = styled.div`
     & i {
       display: initial;
     }
-  }
+  } */
 
 `
