@@ -13,8 +13,9 @@ var winList = [
 
 export let checkIfWin = (arr, sign) => {
 
-    if (checkEachOptionToWin(arr, sign)) {
-        return ( sign === 'X' ? 'win' : 'lose');
+    let resArr = checkEachOptionToWin(arr, sign);
+    if (resArr) {
+        return resArr;//[resArr, (sign === 'X' ? 'win' : 'lose')];
     }
 
     if (countSign(arr, ' ') === 0) {
@@ -32,7 +33,7 @@ export let AIturn = (arr, level) => {
         return chanceToWin(arr) || randomNum(arr);
 
     } else if (level === 'Hard') {
-        return chanceToWin(arr) || AImove(arr) || randomNum(arr);
+        return chanceToWin(arr) || AImove(arr);
     }
 }
 
@@ -70,10 +71,18 @@ function randomNum(arr) {
 }
 
 function checkEachOptionToWin(arr, sign) {
-    return winList.some((i) => {
-        return (i.every((j) => { return arr[j] === sign; }));
+    // Iterating through winList
+    const winCombination = winList.find(winCombination => {
+        // Iterating through each winCombination
+        return winCombination.every(index => { 
+            //checking if the element at index is equal to the sign provided
+            return arr[index] === sign;
+        });
     });
+    return winCombination || false;
 }
+
+
 
 export let countSign = (arr, sign) => {
     return arr.filter(arr => arr === sign).length;

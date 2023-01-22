@@ -12,6 +12,8 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
 
   const [arr, setArr] = useState([" ", " ", " ", " ", " ", " ", " ", " ", " "]);
   const [choosenPlace, setChoosenPlace] = useState();
+  const [lastTurn, setLastTurn] = useState(true);
+  const [winArr, setWinArr] = useState([]);
 
   useEffect(() => {
     if (typeof choosenPlace === "number") {
@@ -27,6 +29,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
 
   useEffect(() => {
     let tempStat = [...stat];
+    winner && setLastTurn(() => {return !lastTurn});
     tempStat[(winner === 'win' ? 0 : winner === 'tie' ? 1 : winner === 'lose' && 2)]++;
     setStat(tempStat);
   }, [winner])
@@ -45,6 +48,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
               place={i}
               arr={arr}
               setTurn={setChoosenPlace}
+              findInWinArr={winArr.includes(i)}
             ></Square>
           );
         })}
@@ -54,19 +58,26 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
   );
 
   function checkIfWinAndAIMakeMove() {
-    if (countSign(arr, "X") > countSign(arr, "O")) {
-      const gameRes = checkIfWin(arr, "X");
-      setWinner(gameRes);
-
-      if (!gameRes) {
+    if ((lastTurn && countSign(arr, "X") > countSign(arr, "O")) ||
+        (!lastTurn && countSign(arr, "X") === countSign(arr, "O"))) {
+      
+      let gameRes = checkIfWin(arr, 'X');
+      if (gameRes) {
+        gameRes === 'tie' || setWinArr(gameRes);
+        setTimeout(() => {
+          setWinner((gameRes === 'tie' ? gameRes : 'win'));
+        }, 1500);
+      } else {
         setTimeout(() => {
           let tempArr = [...arr];
           tempArr[AIturn(tempArr, level) - 1] = "O";
 
-          if (checkIfWin(tempArr, "O")) {
+          gameRes = checkIfWin(tempArr, 'O')
+          if (gameRes) {
+            gameRes === 'tie' || setWinArr(gameRes);
             setTimeout(() => {
-              setWinner("lose");
-            }, 250);
+              setWinner((gameRes === 'tie' ? gameRes : 'lose'));
+            }, 1500);
           }
           setArr(tempArr);
         }, 150);
@@ -75,9 +86,16 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
   }
 
   function reset(flag) {
-    setArr([" ", " ", " ", " ", " ", " ", " ", " ", " "]);
+    if (lastTurn) {
+      setArr([" ", " ", " ", " ", " ", " ", " ", " ", " "]);
+    } else {
+      let tempArr = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+      tempArr[[0, 2, 4, 4, 6, 8][Math.floor(Math.random() * 6)]] = 'O';
+      setArr([...tempArr])
+    }
     setChoosenPlace(false);
     setWinner(false);
+    setWinArr([]);
     flag && setLevel(false);
   }
 
@@ -85,8 +103,9 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
 
 
 const BoardStyle = styled.div`
-    width: max(620px, 45%);
+    /* width: max(620px, 45%); */
     max-width: 75vh;
+    width: 80vmin;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -107,7 +126,7 @@ const ResetBtn = styled(DefaultStyle)`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 15px;
+    margin-top: 3vmin;
     border-radius: 8px;
     @media (max-device-width:  768px) {
       font-size:xx-large;

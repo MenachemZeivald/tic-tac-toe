@@ -25,6 +25,7 @@ body {
 
 * {
   text-decoration: none;
+  user-select: none;
 }
 
 .material-symbols-outlined {

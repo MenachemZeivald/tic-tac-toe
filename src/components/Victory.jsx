@@ -7,12 +7,10 @@ export default function Victory({ res, restart, lang }) {
   useEffect(() => {
     document.body.style.aspectRatio = '1';
     document.body.style.background = 'repeating-radial-gradient(var(--blue), #78b5e4, var(--blue) 25%)';
-    // document.nav.style.width = '100svw';
   
     return () => {
     document.body.style.aspectRatio = null;
-    document.body.style.background = 'var(--blue)'
-    // document.nav.style.width = 'initial';
+    document.body.style.background = 'var(--blue)';
     }
   }, [])
 
@@ -24,18 +22,18 @@ export default function Victory({ res, restart, lang }) {
           <ResetBtns onClick={()=>{restart(true)}} lang={lang} >{ lang === 'en' ? 'change level' : 'לשנות דרגת קושי'}</ResetBtns>
         </ResBtnContainer>
         <ResIcons>
-          <div>X</div>
-          <div>O</div>
+          <div translate='no' >X</div>
+          <div translate='no' >O</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Thumb_Up' : res === 'lose' ? 'Thumb_Down' : 'Thumb_up' }</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
-          <div>X</div>
-          <div>O</div>
+          <div translate='no' >X</div>
+          <div translate='no' >O</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Thumb_Up' : 'Thumb_Down'}</div>
           <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
-          <div>X</div>
-          <div>O</div>
+          <div translate='no' >X</div>
+          <div translate='no' >O</div>
         </ResIcons>
     </ResContainer>
   )
@@ -84,7 +82,6 @@ const ResContainer = styled.div`
   font-size: 50px;
   height: 70svh;
   width: 100svw;
-  /* margin: 0 auto; */
   @media (max-device-width:  425px) {
     margin-top: 9vh;
   }
@@ -93,9 +90,7 @@ const ResTxt = styled.div`
   font-size: 20vw;
   color: var(--yellow);
   -webkit-text-stroke: var(--pink) .02em;
-  user-select: none;
   text-align: center;
-  /* white-space: nowrap; */
   line-height: 1em;
   @media (max-device-width:  768px) {
       font-size: 20vh;
@@ -115,7 +110,6 @@ const ResBtnContainer = styled.div`
     height: 100%;
     padding: 0em .3em;
     border-width: 4px;
-    user-select: none;
     font-size: 5vw;
   }
   @media (max-device-width:  425px) {

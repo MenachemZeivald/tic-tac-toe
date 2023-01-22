@@ -10,16 +10,13 @@ export default function AImove(arr) {
 
 function manualMoves(arr) {
 
-    if (countSign(arr, 'X') === 1) {
+    if (countSign(arr, 'O') === 0) {
         if (arr[4] === ' ') {
             return 4 + 1;
         }
         return ([0, 2, 6, 8][(Math.floor(Math.random() * 4))] + 1);       
     }
 
-    if (arr[0] + arr[2] + arr[6] + arr[8] === 'XX') {
-        return ([1, 3, 3, 7][(Math.floor(Math.random() * 4))] + 1);
-    }
     return false;
 }
 
@@ -37,7 +34,7 @@ function buildGameTree(arr) {
         let tempArr = [...arr];
         if (arr[place] === ' ') {
             tempArr[place] = 'O';
-            avialbleOptions[place] = checkBranch(tempArr, 'X');
+            avialbleOptions[place] = checkBranch(tempArr, 'X', 0);
         }
     }
 
@@ -49,11 +46,17 @@ function buildGameTree(arr) {
     return (chooseRandom[Math.floor(Math.random() * chooseRandom.length)]  * 1) + 1;
 }
 
-function checkBranch(arr, sign) {
+function checkBranch(arr, sign, depth) {
     
-    let res = checkIfWin(arr, 'O');
+    let res = checkIfWin(arr, (sign === 'X' ? 'O' : 'X'));
     if (res) {
-        return (res === 'lose' ? 1 : res === 'win' ? -1 : 0);
+        if (res === 'tie') {
+            return 0;
+        }
+        if (sign === 'X' && depth === 2) {
+            return 10;
+        }
+        return (sign === 'O' ? -1 : 1);
     }
 
     /* Checking if there is a winning move for the AI or the player. If there is, it returns the score
@@ -68,7 +71,7 @@ function checkBranch(arr, sign) {
 
         tempArr = [...arr];
         tempArr[goodOption - 1] = sign;
-        return checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'));
+        return checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'), depth + 1);
     }
 
     /* Checking all the possible moves and assigning a score to each move. */
@@ -78,7 +81,7 @@ function checkBranch(arr, sign) {
         tempArr = [...arr];
         if (arr[place] === ' ') {
             tempArr[place] = sign;
-            avialbleOptions[place] = checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'));
+            avialbleOptions[place] = checkBranch(tempArr, (sign === 'X' ? 'O' : 'X'), depth + 1);
         }
     }
     /* Returning the sum of all the scores in the object. */
