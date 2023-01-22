@@ -10,6 +10,7 @@ import Board from "./components/Board";
 import Language from "./components/Language";
 
 function App() {
+  
   const [winner, setWinner] = useState("");
   const [level, setLevel] = useState();
   const [stat, setStat] = useState([0, 0, 0]);
@@ -20,10 +21,6 @@ function App() {
   useEffect(() => {
     setStatFunc(winner);
   }, [winner]);
-
-  // git remote add origin https://github.com/MenachemZeivald/tic-tac-toe.git
-  // git branch -M main
-  // git push -u origin main
 
   return (
     <>
@@ -66,14 +63,17 @@ function App() {
   );
 
   function setStatFunc(winner) {
+
     if (winner === "Win") {
       let tempStat = [...stat];
       tempStat[0]++;
       setStat(tempStat);
+
     } else if (winner === "Tie") {
       let tempStat = [...stat];
       tempStat[1]++;
       setStat(tempStat);
+
     } else if (winner === "Lose") {
       let tempStat = [...stat];
       tempStat[2]++;

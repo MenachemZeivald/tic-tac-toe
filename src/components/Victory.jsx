@@ -7,34 +7,34 @@ export default function Victory({ res, restart, lang }) {
   useEffect(() => {
     document.body.style.aspectRatio = '1';
     document.body.style.background = 'repeating-radial-gradient(var(--blue), #78b5e4, var(--blue) 25%)';
-  
+
     return () => {
-    document.body.style.aspectRatio = null;
-    document.body.style.background = 'var(--blue)';
+      document.body.style.aspectRatio = null;
+      document.body.style.background = 'var(--blue)';
     }
   }, [])
 
   return (
     <ResContainer >
-        <ResTxt lang={lang} >{res === 'win' ? ( lang === 'en' ? 'you won!' : 'ניצחת') : res === 'lose' ? (lang === 'en' ? 'you lose!' : 'הפסדת') : (lang === 'en' ? 'tie!' : 'תיקו')}</ResTxt>
-        <ResBtnContainer>
-          <ResetBtns onClick={() => {restart(false)}} lang={lang} >{ lang === 'en' ? 'play again' : 'לשחק שוב'}</ResetBtns>
-          <ResetBtns onClick={()=>{restart(true)}} lang={lang} >{ lang === 'en' ? 'change level' : 'לשנות דרגת קושי'}</ResetBtns>
-        </ResBtnContainer>
-        <ResIcons>
-          <div translate='no' >X</div>
-          <div translate='no' >O</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Thumb_Up' : res === 'lose' ? 'Thumb_Down' : 'Thumb_up' }</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
-          <div translate='no' >X</div>
-          <div translate='no' >O</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu' }</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Thumb_Up' : 'Thumb_Down'}</div>
-          <div className='material-symbols-outlined' translate='no' >{ res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral' }</div>
-          <div translate='no' >X</div>
-          <div translate='no' >O</div>
-        </ResIcons>
+      <ResTxt lang={lang} >{res === 'win' ? (lang === 'en' ? 'you won!' : 'ניצחת') : res === 'lose' ? (lang === 'en' ? 'you lose!' : 'הפסדת') : (lang === 'en' ? 'tie!' : 'תיקו')}</ResTxt>
+      <ResBtnContainer>
+        <ResetBtns onClick={() => { restart(false) }} lang={lang} >{lang === 'en' ? 'play again' : 'לשחק שוב'}</ResetBtns>
+        <ResetBtns onClick={() => { restart(true) }} lang={lang} >{lang === 'en' ? 'change level' : 'לשנות דרגת קושי'}</ResetBtns>
+      </ResBtnContainer>
+      <ResIcons>
+        <div translate='no' >X</div>
+        <div translate='no' >O</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu'}</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Thumb_Up' : res === 'lose' ? 'Thumb_Down' : 'Thumb_up'}</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral'}</div>
+        <div translate='no' >X</div>
+        <div translate='no' >O</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Star' : res === 'lose' ? 'Cancel' : 'Menu'}</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Thumb_Up' : 'Thumb_Down'}</div>
+        <div className='material-symbols-outlined' translate='no' >{res === 'win' ? 'Mood' : res === 'lose' ? 'mood_bad' : 'sentiment_neutral'}</div>
+        <div translate='no' >X</div>
+        <div translate='no' >O</div>
+      </ResIcons>
     </ResContainer>
   )
 }
@@ -93,12 +93,12 @@ const ResTxt = styled.div`
   text-align: center;
   line-height: 1em;
   @media (max-device-width:  768px) {
-      font-size: 20vh;
+      font-size: 17vh;
       &:lang(he) {
-      font-size: 18vh;
+      font-size: 15vh;
       }
     }
-` 
+`
 const ResBtnContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -110,7 +110,6 @@ const ResBtnContainer = styled.div`
     height: 100%;
     padding: 0em .3em;
     border-width: 4px;
-    font-size: 5vw;
   }
   @media (max-device-width:  425px) {
     margin-top: 2vh;
@@ -123,10 +122,13 @@ const ResetBtns = styled(DefaultStyle)`
   @media (max-device-width:  768px) {
       min-width: 80%;
       flex: 2;
-      font-size: 5vh;
+      font-size: 12vw;
       height: fit-content;
       margin-top: 1em;
       padding: .2em 0;
+      &:lang(he) {
+      font-size: 10vw;
+      }
     }
 `
 const ResIcons = styled.div`

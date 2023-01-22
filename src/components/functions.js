@@ -15,7 +15,7 @@ export let checkIfWin = (arr, sign) => {
 
     let resArr = checkEachOptionToWin(arr, sign);
     if (resArr) {
-        return resArr;//[resArr, (sign === 'X' ? 'win' : 'lose')];
+        return resArr;
     }
 
     if (countSign(arr, ' ') === 0) {
@@ -43,10 +43,10 @@ let chanceToWin = arr => {
 
 export function checkEachOption(arr, sign) {
     let res = false;
-    winList.forEach((row) => {
-        let temp = row.filter(index => arr[index] === sign);
+    winList.forEach((winCombination) => {
+        let temp = winCombination.filter(index => arr[index] === sign);
         if (!res && temp.length === 2) {
-            res = checkIfEmptyPlace(arr, row);
+            res = checkIfEmptyPlace(arr, winCombination);
         }
     });
     return res;
@@ -74,15 +74,13 @@ function checkEachOptionToWin(arr, sign) {
     // Iterating through winList
     const winCombination = winList.find(winCombination => {
         // Iterating through each winCombination
-        return winCombination.every(index => { 
+        return winCombination.every(index => {
             //checking if the element at index is equal to the sign provided
             return arr[index] === sign;
         });
     });
     return winCombination || false;
 }
-
-
 
 export let countSign = (arr, sign) => {
     return arr.filter(arr => arr === sign).length;

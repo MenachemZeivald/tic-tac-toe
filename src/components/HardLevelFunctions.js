@@ -5,10 +5,10 @@ import {
 } from "./functions";
 
 export default function AImove(arr) {    
-    return manualMoves(arr) || buildGameTree(arr);
+    return manualMoves4FirstTurn(arr) || buildGameTree(arr);
 }
 
-function manualMoves(arr) {
+function manualMoves4FirstTurn(arr) {
 
     if (countSign(arr, 'O') === 0) {
         if (arr[4] === ' ') {

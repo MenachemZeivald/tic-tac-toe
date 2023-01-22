@@ -15,6 +15,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
   const [lastTurn, setLastTurn] = useState(true);
   const [winArr, setWinArr] = useState([]);
 
+  // when the user click on square
   useEffect(() => {
     if (typeof choosenPlace === "number") {
       let tempArr = [...arr];
@@ -24,9 +25,10 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
   }, [choosenPlace]);
 
   useEffect(() => {
-    checkIfWinAndAIMakeMove();
+    checkIfWinAndMakeAIMove();
   }, [arr]);
 
+  // when the game ends update the stat 
   useEffect(() => {
     let tempStat = [...stat];
     winner && setLastTurn(() => {return !lastTurn});
@@ -35,6 +37,9 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
   }, [winner])
 
   if (winner) {
+    if (level === 'Hard' && winner === 'win') {
+      alert('הצלחת לנצח בשלב הקשה? אשמח לשמוע על זה!');
+    }
     return <Victory res={winner} restart={reset} lang={lang} />;
   }
 
@@ -57,7 +62,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
     </>
   );
 
-  function checkIfWinAndAIMakeMove() {
+  function checkIfWinAndMakeAIMove() {
     if ((lastTurn && countSign(arr, "X") > countSign(arr, "O")) ||
         (!lastTurn && countSign(arr, "X") === countSign(arr, "O"))) {
       
@@ -67,6 +72,7 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
         setTimeout(() => {
           setWinner((gameRes === 'tie' ? gameRes : 'win'));
         }, 1500);
+      
       } else {
         setTimeout(() => {
           let tempArr = [...arr];
@@ -103,7 +109,6 @@ export default function Board({ setWinner, level, setLevel, winner, stat, setSta
 
 
 const BoardStyle = styled.div`
-    /* width: max(620px, 45%); */
     max-width: 75vh;
     width: 80vmin;
     display: grid;
